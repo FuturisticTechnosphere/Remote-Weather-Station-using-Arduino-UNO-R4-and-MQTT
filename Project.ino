@@ -125,7 +125,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(CLOCK), EncoderRotated, CHANGE);    // Attach ISR to the CLOCK transition
   Serial.begin(9600);                                                       // Initialize the serial monitor
   dht.begin();                                                              // Initialize DHT
-  lcd.begin(16, 2);                                                         // Iinitialize LCD
+  lcd.begin(16, 2);                                                         // Initialize LCD
   lcd.setCursor(0, 0);
   lcd.print(F("Humidity detect"));
   lcd.setCursor(0, 1);
