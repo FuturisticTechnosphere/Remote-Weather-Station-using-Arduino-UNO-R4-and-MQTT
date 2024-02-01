@@ -71,16 +71,16 @@ IPAddress localIP;
 WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient);
 
-void initWiFi() {
-  WiFi.begin(ssid, password);  
-  Serial.print("\nConnecting to WiFi ..");
-  while (WiFi.status() != WL_CONNECTED) {  
+void initWiFi() {                              
+  WiFi.begin(ssid, password);                 // Connect the Board to WiFi
+  Serial.print("\nConnecting to WiFi ..");     
+  while (WiFi.status() != WL_CONNECTED) {      
     Serial.print('.');
     delay(1000);
   }
   Serial.print("\nYou're connected to ");
   Serial.println(WiFi.SSID());
-  IPAddress localIP = WiFi.localIP();
+  IPAddress localIP = WiFi.localIP();         // Assign the Board local IP to the localIP variable
   Serial.print("IP:");
   Serial.println(localIP);  
 }
@@ -103,12 +103,11 @@ void ShowValue(float T, float H) {
   }else{
     lcd.setCursor(0, 0);
     lcd.print(F("T:"));
-    lcd.print(T);
-    lcd.write(223);  
+    lcd.print(T);                // Print temperature on the LCD screen
+    lcd.write(223);              // Degree symbol
     lcd.print(F("C"));
-    H = dht.readHumidity();
     lcd.setCursor(0, 1);
-    lcd.print(F("HR:"));
+    lcd.print(F("HR:"));         // Print relative humidity on the LCD screen
     lcd.print(H);
     lcd.print(F("%"));
   }
@@ -120,27 +119,27 @@ void EncoderRotated(){
 }
 
 void setup() {
-  pinMode(PIN_LED, OUTPUT);
+  pinMode(PIN_LED, OUTPUT);                                                 
   pinMode(CLOCK, INPUT);                                                    // Set the CLOCK pin as input for the encoder
   pinMode(DATA, INPUT);                                                     // Set the DATA pin as input for the encoder
   attachInterrupt(digitalPinToInterrupt(CLOCK), EncoderRotated, CHANGE);    // Attach ISR to the CLOCK transition
-  Serial.begin(9600);
-  dht.begin();
-  lcd.begin(16, 2);
+  Serial.begin(9600);                                                       // Initialize the serial monitor
+  dht.begin();                                                              // Initialize DHT
+  lcd.begin(16, 2);                                                         // Iinitialize LCD
   lcd.setCursor(0, 0);
   lcd.print(F("Humidity detect"));
   lcd.setCursor(0, 1);
   lcd.print(F("and Temperature"));
   delay(10000);
   lcd.clear();
-  initWiFi();
+  initWiFi();                                                               // Calls "initWiFiW function in void setup
   Serial.println("Broker connecting");
-  if (!mqttClient.connect(mqtt_broker, mqtt_port)) {
-    Serial.print("MQTT connection failed! Error code = ");
+  if (!mqttClient.connect(mqtt_broker, mqtt_port)) {                        // Connect to the MQTT broker, and verify if the connection happened
+    Serial.print("MQTT connection failed! Error code = ");                  // Display the error code on the serial monitor, connecction did not occur
     Serial.println(mqttClient.connectError());
   }
   else{
-  Serial.println("You're connected to the MQTT broker!");
+  Serial.println("You're connected to the MQTT broker!");                   // Connection occurred 
   Serial.println();
   }
 }
@@ -166,16 +165,18 @@ void loop() {
     Serial.println(" seconds");
   }
   static unsigned long previousMillis = 0;
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    String ipaddress = WiFi.localIP().toString();
-    String topicstring = "/" + ipaddress + "/env";
+  unsigned long currentMillis = millis();             
+  if (currentMillis - previousMillis >= interval) {   
+    previousMillis = currentMillis;                   // New measuring interval set
+    String ipaddress = WiFi.localIP().toString();     // Turn the IP address into a string
+    String topicstring = "/" + ipaddress + "/env";    // Form a dinamic mqtt topic 
     strcpy(topic, topicstring.c_str());
     JSONVar doc;
+    // Make one single JSON message which contains both Temperature and humidity
     doc["Temperature"]  = dht.readTemperature();
     doc["Humidity"] = dht.readHumidity();      
     String jsonString1 = JSON.stringify(doc);
+    // Subscribe to the selected topic and publish sensor data
     mqttClient.subscribe(topic);
     mqttClient.beginMessage(topic);
     mqttClient.print(jsonString1);
