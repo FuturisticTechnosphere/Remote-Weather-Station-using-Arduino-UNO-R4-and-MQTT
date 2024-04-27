@@ -1,3 +1,5 @@
+---
+
 ## Setting Up the Microservice Environment
 
 ### Prerequisites
@@ -33,12 +35,12 @@ Ensure you have a virtual machine running Ubuntu installed. The following guide 
    mkdir docker
    sudo apt install vim docker-compose
    ```
-2. Create a Docker Compose configuration using [Docker Compose Configuration](https://github.com/FuturisticTechnosphere/Remote-Weather-Station-using-Arduino-UNO-R4-and-MQTT/blob/main/docker-compose.yml): this YAML file contains the configuration for setting up the microservice environment using Docker Compose.
+2. Create a Docker Compose configuration file:
    ```
    vim docker-compose.yml
    ```
-4. Inside `docker-compose.yml`, add the configuration for Mosquitto, MongoDB, and Node-Red microservices.
-5. Start the services by running:
+3. Inside [docker-compose.yml](communication/network_setup_guide.md), add the configuration for Mosquitto, MongoDB, and Node-Red microservices. 
+4. Start the services by running:
    ```
    sudo docker-compose up
    ```
