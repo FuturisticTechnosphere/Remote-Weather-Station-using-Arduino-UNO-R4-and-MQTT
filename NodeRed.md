@@ -1,4 +1,5 @@
 ### Node-RED Flow Description
+![flownodered](https://github.com/FuturisticTechnosphere/Remote-Weather-Station-using-Arduino-UNO-R4-and-MQTT/assets/138108581/627fce61-4609-4aa9-9cc6-0cf359914b88)
 
 1. **Ottone (MQTT Input Node):**
    - This node is responsible for receiving messages from an MQTT broker. It subscribes to a specific topic and receives the published messages.
