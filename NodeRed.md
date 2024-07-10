@@ -4,10 +4,12 @@
 1. **Ottone (MQTT Input Node):**
    - This node is responsible for receiving messages from an MQTT broker. It subscribes to a specific topic and receives the published messages.
    - In this setup, the node is labeled "Ottone" and is connected, indicating it is currently receiving messages.
+   - In this node, we are going to indicate the Broker we are using and the designated topic we are subscribing to.
 
 2. **Meteo ArduinoR4 (MongoDB Output Node):**
    - This node is responsible for saving data to a MongoDB database. It inserts the incoming data into the specified database and collection.
    - Here, it is labeled "Meteo ArduinoR4" and shows a connection, indicating it is actively saving data to MongoDB.
+   - In this node, we can connect mongoDB with the broker.
 
 3. **debug 1 (Debug Node):**
    - This node outputs messages to the debug pane, allowing you to see the messages passing through your flow.
