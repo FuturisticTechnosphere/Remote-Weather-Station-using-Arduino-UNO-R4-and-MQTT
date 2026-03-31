@@ -4,8 +4,6 @@
 
 ## Project Overview
 
-Developed collaboratively by Salvatore Zuccaro, Luigi Emiliano Basso, and Rosario Pipitone as part of the IoT (Internet of Things) course at the University of Palermo under the guidance of Professor Giuliano Fabrizio, the Smart Weather Station is designed to provide real-time weather data with interactive features.
-
 ### Key Features
 
 1. **Live Temperature and Humidity Updates:**
